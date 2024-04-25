@@ -9,6 +9,7 @@ namespace FileSearcher.View
 {
     public partial class MainForm : Form
     {
+        Thread threadSearchFile;
         public MainForm()
         {
             InitializeComponent();
@@ -36,7 +37,7 @@ namespace FileSearcher.View
             }
         }
 
-        Thread threadSearchFile;
+        
         private void btnStartSearch_Click(object sender, EventArgs e)
         {
             if (threadSearchFile != null) threadSearchFile.Abort();
