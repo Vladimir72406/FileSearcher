@@ -17,18 +17,21 @@ namespace FileSearcher.Logic
         private MainForm mainForm;
         private Label lblCurrentDir;
         private Label lblFileCount;
+        private ManualResetEvent eventOfSleepThread;
 
-        public TreeManager(string _templateFileName, MainForm _mainForm, Label _lblCurrentDir, Label _lblFileCount)
+        public TreeManager(string _templateFileName, MainForm _mainForm, Label _lblCurrentDir, Label _lblFileCount, ManualResetEvent _event)
         {
             this.templateFileName = _templateFileName;
             this.mainForm = _mainForm;
             this.lblCurrentDir = _lblCurrentDir;
             this.lblFileCount = _lblFileCount;
             fileCount = 0;
+            eventOfSleepThread = _event;
         }
 
         public void Start(string _folder, TreeNode tn, string _patternOfFileNmae)
         {
+            eventOfSleepThread.WaitOne();
             executeAction(() => lblCurrentDir.Text = _folder);
             checkEveryFolder(_folder, tn, _patternOfFileNmae);
             searchFilesAndAddToNode(_folder, tn, _patternOfFileNmae);

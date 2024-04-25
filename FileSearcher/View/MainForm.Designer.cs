@@ -44,6 +44,8 @@ namespace FileSearcher.View
             this.label4 = new System.Windows.Forms.Label();
             this.lblFileCount = new System.Windows.Forms.Label();
             this.timerSerchFile = new System.Windows.Forms.Timer(this.components);
+            this.btnPauseSearch = new System.Windows.Forms.Button();
+            this.btnContinueSearch = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtStartDir
@@ -75,11 +77,11 @@ namespace FileSearcher.View
             // 
             // btnStartSearch
             // 
-            this.btnStartSearch.Location = new System.Drawing.Point(646, 127);
+            this.btnStartSearch.Location = new System.Drawing.Point(646, 89);
             this.btnStartSearch.Name = "btnStartSearch";
             this.btnStartSearch.Size = new System.Drawing.Size(142, 25);
             this.btnStartSearch.TabIndex = 3;
-            this.btnStartSearch.Text = "Поиск";
+            this.btnStartSearch.Text = "Начать поиск";
             this.btnStartSearch.UseVisualStyleBackColor = true;
             this.btnStartSearch.Click += new System.EventHandler(this.btnStartSearch_Click);
             // 
@@ -165,11 +167,35 @@ namespace FileSearcher.View
             // 
             this.timerSerchFile.Tick += new System.EventHandler(this.timerSerchFile_Tick);
             // 
+            // btnPauseSearch
+            // 
+            this.btnPauseSearch.Enabled = false;
+            this.btnPauseSearch.Location = new System.Drawing.Point(646, 121);
+            this.btnPauseSearch.Name = "btnPauseSearch";
+            this.btnPauseSearch.Size = new System.Drawing.Size(142, 23);
+            this.btnPauseSearch.TabIndex = 13;
+            this.btnPauseSearch.Text = "Остановить";
+            this.btnPauseSearch.UseVisualStyleBackColor = true;
+            this.btnPauseSearch.Click += new System.EventHandler(this.btnPauseSearch_Click);
+            // 
+            // btnContinueSearch
+            // 
+            this.btnContinueSearch.Enabled = false;
+            this.btnContinueSearch.Location = new System.Drawing.Point(646, 151);
+            this.btnContinueSearch.Name = "btnContinueSearch";
+            this.btnContinueSearch.Size = new System.Drawing.Size(142, 23);
+            this.btnContinueSearch.TabIndex = 14;
+            this.btnContinueSearch.Text = "Продолжить";
+            this.btnContinueSearch.UseVisualStyleBackColor = true;
+            this.btnContinueSearch.Click += new System.EventHandler(this.btnContinueSearch_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(811, 520);
+            this.Controls.Add(this.btnContinueSearch);
+            this.Controls.Add(this.btnPauseSearch);
             this.Controls.Add(this.lblFileCount);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.lblTimeOfSearch);
@@ -207,5 +233,7 @@ namespace FileSearcher.View
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label lblFileCount;
         private System.Windows.Forms.Timer timerSerchFile;
+        private System.Windows.Forms.Button btnPauseSearch;
+        private System.Windows.Forms.Button btnContinueSearch;
     }
 }

@@ -10,6 +10,7 @@ namespace FileSearcher.View
     public partial class MainForm : Form
     {
         Thread threadSearchFile;
+        ManualResetEvent _event = new ManualResetEvent(true);
         public MainForm()
         {
             InitializeComponent();
@@ -41,6 +42,10 @@ namespace FileSearcher.View
         private void btnStartSearch_Click(object sender, EventArgs e)
         {
             if (threadSearchFile != null) threadSearchFile.Abort();
+            _event.Set();
+
+            btnPauseSearch.Enabled = true;
+            btnContinueSearch.Enabled = false;
 
             timerSerchFile.Enabled = true;
             timerSerchFile.Start();
@@ -49,18 +54,17 @@ namespace FileSearcher.View
             threadSearchFile.IsBackground = false;
             threadSearchFile.Start();
 
-            dateTimeStartSearch = DateTime.Now;
-            
+            dateTimeStartSearch = DateTime.Now;            
         }
 
         public void prepareForTheSearch(MainForm _mainForm, Label _lblCurrentDir)
-        {            
+        {
             Action actionClearOldNodes = (() => tvMain.Nodes.Clear());
             if (_mainForm.InvokeRequired)
-                _mainForm.Invoke(actionClearOldNodes);            
+                _mainForm.Invoke(actionClearOldNodes);
             else
                 actionClearOldNodes();
-            
+
             StartingSettings startingSettings = new StartingSettings();
             startingSettings.startDirectory = txtStartDir.Text;
             startingSettings.templateFileName = txtTemplateFileName.Text;
@@ -68,20 +72,27 @@ namespace FileSearcher.View
             ISettings settings = new SettingsResourseApp();
             settings.Save(startingSettings);
 
-            TreeManager treeManager = new TreeManager(startingSettings.templateFileName, _mainForm, _lblCurrentDir, this.lblFileCount);
-            
+            TreeManager treeManager = new TreeManager(startingSettings.templateFileName, 
+                                                        _mainForm, _lblCurrentDir, 
+                                                        this.lblFileCount, this._event);
+
             TreeNode tn = new TreeNode(startingSettings.startDirectory);
 
             Action actionAddFirstNode = () => tvMain.Nodes.Add(tn);
             if (_mainForm.InvokeRequired)
-                _mainForm.Invoke(actionAddFirstNode);            
+                _mainForm.Invoke(actionAddFirstNode);
             else
                 actionAddFirstNode();
 
-            
+
             treeManager.Start(startingSettings.startDirectory, tn, startingSettings.templateFileName);
 
-            Action actionStopTimer = () => timerSerchFile.Stop();
+            Action actionStopTimer = () =>
+            {
+                timerSerchFile.Stop();
+                btnContinueSearch.Enabled = false;
+                btnPauseSearch.Enabled = false;
+            };
             if (_mainForm.InvokeRequired)
                 _mainForm.Invoke(actionStopTimer);
             else
@@ -100,6 +111,24 @@ namespace FileSearcher.View
             DateTime dateTimeCurent = DateTime.Now;
             DateTime dateTimeResult = new System.DateTime(1970, 1, 1, 0, 0, 0, 0).Add(dateTimeCurent - dateTimeStartSearch);
             lblTimeOfSearch.Text = dateTimeResult.ToString("HH:mm:ss");
+        }
+
+        private void btnPauseSearch_Click(object sender, EventArgs e)
+        {
+            if (threadSearchFile != null)
+            {
+                _event.Reset();
+                btnContinueSearch.Enabled = true;
+                timerSerchFile.Stop();
+
+            }
+        }
+
+        private void btnContinueSearch_Click(object sender, EventArgs e)
+        {
+            _event.Set();
+            timerSerchFile.Start();
+            btnContinueSearch.Enabled = false;
         }
     }
 }
