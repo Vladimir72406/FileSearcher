@@ -29,6 +29,7 @@ namespace FileSearcher.View
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.txtStartDir = new System.Windows.Forms.TextBox();
             this.btnSelectStartDir = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -42,6 +43,7 @@ namespace FileSearcher.View
             this.lblTimeOfSearch = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.lblFileCount = new System.Windows.Forms.Label();
+            this.timerSerchFile = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // txtStartDir
@@ -60,6 +62,7 @@ namespace FileSearcher.View
             this.btnSelectStartDir.TabIndex = 1;
             this.btnSelectStartDir.Text = "Выбрать директорию";
             this.btnSelectStartDir.UseVisualStyleBackColor = true;
+            this.btnSelectStartDir.Click += new System.EventHandler(this.btnSelectStartDir_Click);
             // 
             // label1
             // 
@@ -78,6 +81,7 @@ namespace FileSearcher.View
             this.btnStartSearch.TabIndex = 3;
             this.btnStartSearch.Text = "Поиск";
             this.btnStartSearch.UseVisualStyleBackColor = true;
+            this.btnStartSearch.Click += new System.EventHandler(this.btnStartSearch_Click);
             // 
             // label2
             // 
@@ -98,9 +102,12 @@ namespace FileSearcher.View
             // 
             // tvMain
             // 
+            this.tvMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tvMain.Location = new System.Drawing.Point(16, 256);
             this.tvMain.Name = "tvMain";
-            this.tvMain.Size = new System.Drawing.Size(772, 247);
+            this.tvMain.Size = new System.Drawing.Size(783, 247);
             this.tvMain.TabIndex = 6;
             // 
             // label3
@@ -154,6 +161,10 @@ namespace FileSearcher.View
             this.lblFileCount.Size = new System.Drawing.Size(0, 13);
             this.lblFileCount.TabIndex = 12;
             // 
+            // timerSerchFile
+            // 
+            this.timerSerchFile.Tick += new System.EventHandler(this.timerSerchFile_Tick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -174,6 +185,7 @@ namespace FileSearcher.View
             this.Controls.Add(this.txtStartDir);
             this.Name = "MainForm";
             this.Text = "Файловый поисковик";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -194,5 +206,6 @@ namespace FileSearcher.View
         private System.Windows.Forms.Label lblTimeOfSearch;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label lblFileCount;
+        private System.Windows.Forms.Timer timerSerchFile;
     }
 }

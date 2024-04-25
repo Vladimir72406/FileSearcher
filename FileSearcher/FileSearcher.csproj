@@ -52,6 +52,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Logic\SettingsFolder\ISettings.cs" />
+    <Compile Include="Logic\LogFileManager.cs" />
+    <Compile Include="Logic\SettingsFolder\SettingsINI.cs" />
+    <Compile Include="Logic\SettingsFolder\SettingsResourseApp.cs" />
+    <Compile Include="Logic\TreeManager.cs" />
+    <Compile Include="Models\StartingSettings.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View\MainForm.cs">
